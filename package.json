@@ -1,0 +1,28 @@
+{
+  "name": "y",
+  "version": "1.0.0",
+  "description": "Your friendly tax collector 👮🏻‍♂️",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib",
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/robsquires/monzo-tax-collector.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/robsquires/monzo-tax-collector/issues"
+  },
+  "homepage": "https://github.com/robsquires/monzo-tax-collector#readme",
+  "dependencies": {
+    "dotenv": "^8.2.0",
+    "node-fetch": "^2.6.0",
+    "uuid": "^3.3.3"
+  }
+}
