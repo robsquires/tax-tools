@@ -1,27 +1,6 @@
-const sample = require('./sample.json');
-const flattenObject = require('./flatten-object');
+const sample = require('../sample.json');
+const filterTransaction = require('../lib/filter');
 
-function filterTransaction ({ type, data }, criteria) {
-    
-    if (type !== 'transaction.created') {
-        return null;
-    }
-
-    const flattenedTx = flattenObject(data);
-    const matchesCriteria = !Object.keys(criteria).some(key => {
-        const value = criteria[key];
-        if (value.test) {
-            return !value.test(flattenedTx[key]);
-        } else {
-            return value !== flattenedTx[key];
-        }
-    });
-
-    return matchesCriteria ? data : null
-}
-
-
-// tests
 
 const tests = [
     [
