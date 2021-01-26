@@ -1,32 +1,47 @@
 const TaxCalculator = require('../src/tax-calculator')
 
 const bands = [
-    [0, 2000, 0],
-    [2000, 37500, 0.075],
-    [37500, 150000, 0.325],
-    [150000, 9999999, 0.381], // strictly speaking unlimited
+    [0, 1000, 0],
+    [1000, 2000, 0.1],
+    [2000, 3000, 0.2],
 ]
 
 const calculator = new TaxCalculator(bands)
 
-test('tax free band', () => {
-    expect(calculator.totalTax(0)).toEqual(0)
-    expect(calculator.totalTax(10)).toEqual(0)
-    expect(calculator.totalTax(2000)).toEqual(0)
+describe('calculateNet', () => {
+    test('within first tax band', () => {
+        expect(calculator.calculateNet(0, 0)).toEqual(0)
+        expect(calculator.calculateNet(200, 10)).toEqual(0)
+        expect(calculator.calculateNet(0, 1000)).toEqual(0)
+    })
+
+    test('within next tax band', () => {
+        // first band
+        expect(calculator.calculateNet(1200, 500)).toEqual(50)
+    })
+
+    test('straddling multiple tax bands', () => {
+        expect(calculator.calculateNet(500, 1000)).toEqual(50)
+        expect(calculator.calculateNet(1500, 1000)).toEqual(150)
+    })
+
+    test('decimal values', () => {
+        expect(calculator.calculateNet(0, 1500.5)).toEqual(50.05)
+    })
 })
 
-test('additional tax bands', () => {
-    // first band
-    expect(calculator.totalTax(3000)).toEqual(75)
+describe('grossUp', () => {
+    test('net and gross amount fall within first tax band', () => {
+        expect(calculator.grossUp(0, 500)).toEqual(500)
+        expect(calculator.grossUp(200, 500)).toEqual(500)
+    })
 
-    // up to next band
-    expect(calculator.totalTax(37500)).toEqual(2662.5)
+    test('net and gross amount fall within next tax band', () => {
+        expect(calculator.grossUp(0, 1500)).toEqual(1555.56)
+        expect(calculator.grossUp(200, 1500)).toEqual(1577.78)
+    })
 
-    // into other bands
-    expect(calculator.totalTax(40000)).toEqual(3475)
-    expect(calculator.totalTax(160000)).toEqual(43035)
-})
-
-test('decimal values', () => {
-    expect(calculator.totalTax(3000.5)).toEqual(75.04)
+    test('net and gross amount straddle tax bands', () => {
+        expect(calculator.grossUp(1500, 495)).toEqual(556.25)
+    })
 })
