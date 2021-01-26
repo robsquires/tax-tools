@@ -9,7 +9,8 @@
   },
   "engines" : { "node" : "12.x" },
   "scripts": {
-    "start": "node index.js"
+    "start": "node index.js",
+     "test": "jest"
   },
   "repository": {
     "type": "git",
@@ -27,5 +28,8 @@
     "express": "^4.17.1",
     "node-fetch": "^2.6.0",
     "uuid": "^3.3.3"
+  },
+  "devDependencies": {
+    "jest": "^26.6.3"
   }
 }
