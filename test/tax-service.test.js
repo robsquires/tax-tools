@@ -76,5 +76,9 @@ describe('tax-service', () => {
             expect(earningsMock.set).not.toBeCalled()
             expect(calculatorMock.grossUp).toBeCalledWith(0, netEarnings)
         })
+
+        test('validated valid money amount', async () => {
+            expect(() => taxService.calculateGrossPayment('a')).rejects
+        })
     })
 })
