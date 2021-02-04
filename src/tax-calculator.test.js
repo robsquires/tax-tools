@@ -1,4 +1,4 @@
-const TaxCalculator = require('../src/tax-calculator')
+const TaxCalculator = require('./tax-calculator')
 
 const bands = [
     [0, 1000, 0],
