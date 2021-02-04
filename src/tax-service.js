@@ -1,3 +1,4 @@
+const money = require('./utils/money')
 class TaxService {
     constructor(calculator, earnings) {
         this.calculator = calculator
@@ -24,6 +25,7 @@ class TaxService {
     }
 
     async calculateGrossPayment(netAmount) {
+        netAmount = money.parse(netAmount)
         var earningsToDate = 0
         try {
             earningsToDate = await this.earnings.get()
