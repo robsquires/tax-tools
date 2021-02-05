@@ -1,4 +1,4 @@
-const { tax } = require('../services/tax')
+const { tax } = require('../lib/tax')
 
 module.exports.handler = async (event) => {
   const { queryStringParameters } = event
