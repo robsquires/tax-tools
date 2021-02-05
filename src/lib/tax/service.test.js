@@ -1,4 +1,4 @@
-const TaxService = require('./tax-service')
+const TaxService = require('./service')
 
 const calculatorMock = {
     calculateNet: jest.fn(),
