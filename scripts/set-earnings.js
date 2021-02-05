@@ -1,16 +1,12 @@
 require('dotenv').config()
 
-const {
-    earnings
-} = require('../src/services/tax')
+const { earnings } = require('../src/lib/tax')
 
 async function main(amount) {
     await earnings.set(amount)
     return {
-        total: await earnings.get()
+        total: await earnings.get(),
     }
 }
 
-main(parseFloat(process.argv[2]))
-    .then(console.log)
-    .catch(console.err)
+main(parseFloat(process.argv[2])).then(console.log).catch(console.err)

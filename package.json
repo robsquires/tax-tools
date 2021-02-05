@@ -13,7 +13,7 @@
   "scripts": {
     "start": "node index.js",
     "test": "jest",
-    "lint": "eslint src/** test/**"
+    "lint": "eslint src/** test/** scripts/**"
   },
   "repository": {
     "type": "git",
