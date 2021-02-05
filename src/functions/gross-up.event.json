@@ -1,0 +1,14 @@
+{
+    "resource": "/",
+    "path": "/",
+    "httpMethod": "POST",
+    "headers": {
+      "Accept": "application/json",
+    },
+    "queryStringParameters": { "amount": "1000" },
+    "pathParameters": null,
+    "stageVariables": null,
+    "requestContext": {},
+    "body": "",
+    "isBase64Encoded": false
+}
