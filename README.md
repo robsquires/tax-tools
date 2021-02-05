@@ -1,6 +1,4 @@
-# monzo-tax-collector
-Your friendly tax collector 👮🏻‍♂️
-
+# Tax tools 👮‍♂️ 👮
 
 A collection of tools to help manage taxes
 
@@ -8,7 +6,7 @@ A collection of tools to help manage taxes
 
 - **What's my dividend?** An Apple Shortcut that tells you the value of a dividend payment required to leave a given amount after tax
 
-- **Monzo Tax collector** - A Monzo webhook which automatically collects tax in a pot when a payment is made. WIP
+- **Monzo Tax collector** - A Monzo webhook which automatically collects tax in a pot when a payment is made - WIP
 
 
 # Queries/commands
