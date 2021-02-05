@@ -1,7 +1,7 @@
 {
-  "name": "y",
+  "name": "tax-tools",
   "version": "1.0.0",
-  "description": "Your friendly tax collector 👮🏻‍♂️",
+  "description": "A collection of tools to help manage taxes 👮🏻‍♂️",
   "main": "index.js",
   "directories": {
     "lib": "lib",
@@ -17,14 +17,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/robsquires/monzo-tax-collector.git"
+    "url": "git+https://github.com/robsquires/tax-tools.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/robsquires/monzo-tax-collector/issues"
+    "url": "https://github.com/robsquires/tax-tools/issues"
   },
-  "homepage": "https://github.com/robsquires/monzo-tax-collector#readme",
+  "homepage": "https://github.com/robsquires/tax-tools#readme",
   "dependencies": {
     "aws-sdk": "^2.831.0",
     "body-parser": "^1.19.0",
