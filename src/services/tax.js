@@ -1,8 +1,8 @@
 const AWS = require('aws-sdk')
-const TaxService = require('../tax-service')
-const Earnings = require('../earnings')
-const Calculator = require('../tax-calculator')
-const S3Bucket = require('../s3-bucket')
+const TaxService = require('../lib/tax-service')
+const Earnings = require('../lib/earnings')
+const Calculator = require('../lib/tax-calculator')
+const S3Bucket = require('../lib/s3-bucket')
 
 const bucket = new S3Bucket(new AWS.S3(), 'monzo-tax-collector')
 
