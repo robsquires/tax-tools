@@ -4,7 +4,9 @@ const Earnings = require('../lib/earnings')
 const Calculator = require('../lib/tax-calculator')
 const S3Bucket = require('../lib/s3-bucket')
 
-const bucket = new S3Bucket(new AWS.S3(), 'monzo-tax-collector')
+const { DATA_BUCKET } = process.env
+
+const bucket = new S3Bucket(new AWS.S3(), DATA_BUCKET)
 
 const bands = [
     [0, 2000, 0],
