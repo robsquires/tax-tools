@@ -73,3 +73,11 @@ node scripts/record-payment.js {amount}
 <img width="1275" alt="Screenshot 2021-02-05 at 12 52 41" src="https://user-images.githubusercontent.com/616321/107036130-0a9f0c80-67b1-11eb-9b33-f90f83e52d71.png">
 
 
+
+## Monzo Tax collector
+
+
+Use the script `monzo-login` to log in to Monzo and save the access token to S3
+
+<img width="1435" alt="Screenshot 2021-02-07 at 12 02 41" src="https://user-images.githubusercontent.com/616321/107145938-e7a16380-693c-11eb-817f-f621014d6f11.png">
+
