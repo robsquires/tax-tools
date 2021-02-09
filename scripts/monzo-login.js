@@ -3,7 +3,7 @@ const open = require('open')
 const http = require('http')
 const url = require('url')
 const { Spinner } = require('cli-spinner')
-const Monzo = require('../src/lib/monzo')
+const Auth = require('../src/lib/auth')
 
 const spinner = new Spinner('🌍 Please complete login via web browser %s')
 
@@ -30,8 +30,7 @@ async function requestListener(req, res) {
 
     try {
         // don't need oauth state since just running on localhost
-        const accessToken = await Monzo.auth.getToken({ code, redirect_uri })
-        await Monzo.tokenStore.set(accessToken)
+        await Auth.processCode(code, redirect_uri)
     } catch (error) {
         console.log(error)
         return done('❌ Error saving access token!')
@@ -53,7 +52,7 @@ http.createServer(requestListener).listen(port, async () => {
         process.stdin.setRawMode(false)
         spinner.start()
         // open URL in browser
-        open(Monzo.auth.authorizeURL({ response_type: 'code', redirect_uri }))
+        open(Auth.getLoginUrl(redirect_uri))
     })
     console.log('➡️  Press any key to login to Monzo...')
 })
