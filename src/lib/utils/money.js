@@ -1,13 +1,8 @@
-
-
-function isNumeric (n) {
-    return !isNaN(parseFloat(n))
-        && isFinite(n)
-        && (typeof n === 'number')
+function isNumeric(n) {
+    return !isNaN(parseFloat(n)) && isFinite(n) && typeof n === 'number'
 }
 
-
-function parse (amount) {
+function parse(amount) {
     if (!isNumeric(amount)) {
         throw new Error(`Amount is not numeric: ${amount}`)
     }
@@ -19,7 +14,6 @@ function parse (amount) {
     return parseFloat(amount.toFixed(2))
 }
 
-
 module.exports = {
-    parse
+    parse,
 }

@@ -6,36 +6,18 @@ class TaxService {
     }
 
     async applyTax(amount) {
-        var earningsToDate = 0
-        try {
-            earningsToDate = await this.earnings.get()
-        } catch (err) {
-            // could abstract to something domain specific
-            // or move into earnings service
-            if (err.statusCode !== 404) {
-                throw err
-            }
-        }
+        amount = money.parse(amount)
 
+        const earningsToDate = await this.earnings.get()
         const taxToApply = this.calculator.calculateNet(earningsToDate, amount)
-
         await this.earnings.set(earningsToDate + amount)
-
         return taxToApply
     }
 
     async calculateGrossPayment(netAmount) {
         netAmount = money.parse(netAmount)
-        var earningsToDate = 0
-        try {
-            earningsToDate = await this.earnings.get()
-        } catch (err) {
-            // could abstract to something domain specific
-            // or move into earnings service
-            if (err.statusCode !== 404) {
-                throw err
-            }
-        }
+
+        const earningsToDate = await this.earnings.get()
         return this.calculator.grossUp(earningsToDate, netAmount)
     }
 }

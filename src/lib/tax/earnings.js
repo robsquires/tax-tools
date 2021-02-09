@@ -5,8 +5,14 @@ class Earnings {
     }
 
     async get() {
-        const { total } = await this.s3Bucket.read(`${this.taxYear}/earnings.json`)
-        return total
+        try {
+            return (await this.s3Bucket.read(`${this.taxYear}/earnings.json`)).total
+        } catch (err) {
+            if (err.statusCode === 404) {
+                return 0
+            }
+            throw err
+        }
     }
 
     async set(amount) {
