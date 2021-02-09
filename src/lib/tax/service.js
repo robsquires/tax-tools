@@ -5,6 +5,13 @@ class TaxService {
         this.earnings = earnings
     }
 
+    async calculateTax(amount) {
+        amount = money.parse(amount)
+
+        const earningsToDate = await this.earnings.get()
+        return this.calculator.calculateNet(earningsToDate, amount)
+    }
+
     async applyTax(amount) {
         amount = money.parse(amount)
 
