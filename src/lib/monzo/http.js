@@ -1,0 +1,42 @@
+const fetch = require("../utils/fetch-json");
+const qs = require("qs");
+
+class MonzoHttpClient {
+  constructor(host, auth) {
+    this.host = host;
+    this.auth = auth;
+  }
+
+  async get({ path, params = {} }) {
+    return await fetch(`${this.host}/${path}?${qs.stringify(params)}`, {
+      method: "GET",
+      headers: {
+        authorization: `Bearer ${await this.auth.getToken()}`,
+      },
+    });
+  }
+
+  async post({ path, data }) {
+    return await fetch(`${this.host}/${path}`, {
+      method: "POST",
+      headers: {
+        "content-type": "application/x-www-form-urlencoded",
+        authorization: `Bearer ${await this.auth.getToken()}`,
+      },
+      body: qs.stringify(data),
+    });
+  }
+
+  async put({ path, data }) {
+    return await fetch(`${this.host}/${path}`, {
+      method: "PUT",
+      headers: {
+        "content-type": "application/x-www-form-urlencoded",
+        authorization: `Bearer ${await this.auth.getToken()}`,
+      },
+      body: qs.stringify(data),
+    });
+  }
+}
+
+module.exports = MonzoHttpClient;
