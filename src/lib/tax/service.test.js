@@ -33,6 +33,10 @@ describe('tax-service', () => {
             expect(earningsMock.set).toBeCalledWith(earningsToDate + earnings)
             expect(calculatorMock.calculateNet).toBeCalledWith(earningsToDate, earnings)
         })
+
+        test('validated valid money amount', async () => {
+            await expect(() => taxService.applyTax('a')).rejects.toBeTruthy()
+        })
     })
 
     describe('calculateGrossPayment', () => {
@@ -50,6 +54,23 @@ describe('tax-service', () => {
 
         test('validated valid money amount', async () => {
             await expect(() => taxService.calculateGrossPayment('a')).rejects.toBeTruthy()
+        })
+    })
+
+    describe('calculateTax', () => {
+        test('calculate and returns tax', async () => {
+            const earningsToDate = 2000
+            const earnings = 1000
+            earningsMock.get.mockResolvedValue(earningsToDate)
+            calculatorMock.calculateNet.mockReturnValue(50)
+
+            expect(await taxService.calculateTax(earnings)).toEqual(50)
+            expect(earningsMock.set).not.toBeCalled()
+            expect(calculatorMock.calculateNet).toBeCalledWith(earningsToDate, earnings)
+        })
+
+        test('validated valid money amount', async () => {
+            await expect(() => taxService.calculateTax('a')).rejects.toBeTruthy()
         })
     })
 })
