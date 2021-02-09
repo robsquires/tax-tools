@@ -1,16 +1,15 @@
 const money = require('./money')
 
 describe('parse', () => {
-
     test('returns valid amounts', () => {
-        expect(money.parse(1)).toBe(1.00)
+        expect(money.parse(1)).toBe(1.0)
         expect(money.parse(0.99)).toBe(0.99)
-        expect(money.parse(1.10)).toBe(1.10)
+        expect(money.parse(1.1)).toBe(1.1)
     })
 
     test('rounds to nearest pence', () => {
         expect(money.parse(0.999)).toBe(1)
-        expect(money.parse(1.199)).toBe(1.20)
+        expect(money.parse(1.199)).toBe(1.2)
     })
 
     test('throws for non-numeric', () => {

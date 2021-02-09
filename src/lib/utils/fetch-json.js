@@ -6,7 +6,7 @@ const createError = require('http-errors')
  * https://github.com/node-fetch/node-fetch/blob/master/docs/ERROR-HANDLING.md
  */
 
-async function fetchJson (...args) {
+async function fetchJson(...args) {
     // network, DNS other operational errors thrown here
     const response = await fetch(...args)
     const bodyText = await response.text()
