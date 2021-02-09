@@ -1,5 +1,5 @@
 class TokenStore {
-    constructor (s3Bucket) {
+    constructor(s3Bucket) {
         this.s3Bucket = s3Bucket
     }
 
@@ -7,7 +7,7 @@ class TokenStore {
         return await this.s3Bucket.read('access-token.json')
     }
 
-    async set (token) {
+    async set(token) {
         await this.s3Bucket.write('access-token.json', token)
     }
 }

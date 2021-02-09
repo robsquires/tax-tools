@@ -33,24 +33,6 @@ describe('tax-service', () => {
             expect(earningsMock.set).toBeCalledWith(earningsToDate + earnings)
             expect(calculatorMock.calculateNet).toBeCalledWith(earningsToDate, earnings)
         })
-
-        test("starts earnings from 0 if it's a new tax year", async () => {
-            const earnings = 1000
-            earningsMock.get.mockRejectedValue({ statusCode: 404 })
-            calculatorMock.calculateNet.mockReturnValue(10)
-
-            const taxApplied = await taxService.applyTax(earnings)
-
-            expect(taxApplied).toEqual(10)
-            expect(earningsMock.set).toBeCalledWith(earnings)
-            expect(calculatorMock.calculateNet).toBeCalledWith(0, earnings)
-        })
-
-        test('rethrows errors from earnings service', async () => {
-            const err = new Error('ouch')
-            earningsMock.get.mockRejectedValue(err)
-            await expect(() => taxService.applyTax(1000)).rejects.toBe(err)
-        })
     })
 
     describe('calculateGrossPayment', () => {
@@ -66,19 +48,8 @@ describe('tax-service', () => {
             expect(calculatorMock.grossUp).toBeCalledWith(earningsToDate, netEarnings)
         })
 
-        test('earnings start from zero if a new tax year', async () => {
-            const netEarnings = 1000
-            earningsMock.get.mockRejectedValue({ statusCode: 404 })
-            calculatorMock.grossUp.mockReturnValue(1100)
-            const taxApplied = await taxService.calculateGrossPayment(netEarnings)
-
-            expect(taxApplied).toEqual(1100)
-            expect(earningsMock.set).not.toBeCalled()
-            expect(calculatorMock.grossUp).toBeCalledWith(0, netEarnings)
-        })
-
         test('validated valid money amount', async () => {
-            expect(() => taxService.calculateGrossPayment('a')).rejects
+            await expect(() => taxService.calculateGrossPayment('a')).rejects.toBeTruthy()
         })
     })
 })
