@@ -30,7 +30,7 @@
     "debug": "^4.3.1",
     "dotenv": "^8.2.0",
     "http-errors": "^1.8.0",
-    "node-fetch": "^2.6.0",
+    "node-fetch": "^2.6.1",
     "open": "^7.4.0",
     "simple-oauth2": "^4.2.0"
   },
