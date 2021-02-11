@@ -30,4 +30,11 @@ class TransactionLog {
     }
 }
 
-module.exports = TransactionLog
+module.exports = {
+    TransactionLog,
+    statuses: {
+        NEW: 0,
+        DEPOSITED: 1,
+        APPLIED: 2,
+    },
+}

@@ -1,5 +1,5 @@
 const { when } = require('jest-when')
-const TransactionLog = require('./transaction-log')
+const { TransactionLog } = require('./transaction-log')
 const mockBucket = {
     read: jest.fn(),
     write: jest.fn(),
