@@ -16,7 +16,7 @@ function ProcessPayment(tax, transactions, monzo) {
 
         const amount = parseFloat(amountInPence / 100)
 
-        const taxToPay = await tax.getTax(amount)
+        const taxToPay = await tax.calculateTax(amount)
 
         debug('tax', taxToPay)
         if (transaction.status === NEW) {
