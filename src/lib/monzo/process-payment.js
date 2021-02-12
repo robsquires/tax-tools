@@ -7,7 +7,7 @@ function ProcessPayment(tax, transactions, monzo) {
         debug('transaction-id', transactionId)
         const transaction = (await transactions.find(transactionId)) || { status: NEW }
         if (transaction && transaction.status === APPLIED) {
-            console.log('Already processed', transaction)
+            debug('Already processed', transaction)
             return
         }
 
@@ -22,11 +22,18 @@ function ProcessPayment(tax, transactions, monzo) {
         if (transaction.status === NEW) {
             await monzo.depositToPot(taxToPay * 100, potId, accountId)
             transaction.status = DEPOSITED
+            transaction.tax = taxToPay
         }
 
-        await tax.applyTax(amount)
+        try {
+            await tax.applyTax(amount)
+            transaction.status = APPLIED
+        } catch (err) {
+            await transactions.save(transactionId, transaction)
+            throw err
+        }
 
-        await transactions.save(transactionId, { status: APPLIED, tax: taxToPay })
+        await transactions.save(transactionId, transaction)
     }
 }
 
