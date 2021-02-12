@@ -23,9 +23,15 @@ class TransactionLog {
         return (await this.get()).find(({ id }) => transactionId === id)
     }
 
-    async add(transactionId, data) {
+    async save(transactionId, data) {
         const transactions = await this.get()
-        transactions.push({ id: transactionId, ts: new Date(), ...data })
+        const idx = transactions.findIndex(({ id }) => transactionId === id)
+
+        if (idx >= 0) {
+            transactions[idx] = { id: transactionId, ...data }
+        } else {
+            transactions.push({ id: transactionId, ...data })
+        }
         await this.set(transactions)
     }
 }
