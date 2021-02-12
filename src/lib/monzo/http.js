@@ -11,7 +11,7 @@ class MonzoHttpClient {
         return await fetch(`${this.host}/${path}?${qs.stringify(params)}`, {
             method: 'GET',
             headers: {
-                authorization: `Bearer ${await this.auth.getToken()}`,
+                authorization: `Bearer ${await this.auth.getAccessToken()}`,
             },
         })
     }
@@ -21,7 +21,7 @@ class MonzoHttpClient {
             method: 'POST',
             headers: {
                 'content-type': 'application/x-www-form-urlencoded',
-                authorization: `Bearer ${await this.auth.getToken()}`,
+                authorization: `Bearer ${await this.auth.getAccessToken()}`,
             },
             body: qs.stringify(data),
         })
@@ -32,7 +32,7 @@ class MonzoHttpClient {
             method: 'PUT',
             headers: {
                 'content-type': 'application/x-www-form-urlencoded',
-                authorization: `Bearer ${await this.auth.getToken()}`,
+                authorization: `Bearer ${await this.auth.getAccessToken()}`,
             },
             body: qs.stringify(data),
         })
