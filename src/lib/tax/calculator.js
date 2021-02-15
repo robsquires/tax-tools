@@ -20,7 +20,7 @@ class TaxCalculator {
             grossAllocated = grossAmount < remaining ? grossAmount : remaining
         }
 
-        const netAmount = grossAllocated * rate
+        const netAmount = parseInt(grossAllocated * rate)
         const amountFromNextBand = this.calcNetPerBand(
             grossBalance + grossAllocated,
             grossAmount - grossAllocated,
@@ -35,7 +35,7 @@ class TaxCalculator {
         }
 
         const [_, upper, rate] = this.bands[bandIdx]
-        const grossAmount = netAmount / (1 - rate)
+        const grossAmount = parseInt(netAmount / (1 - rate))
         const grossRemaining = upper - grossBalance
 
         let grossAllocated
@@ -45,7 +45,7 @@ class TaxCalculator {
             grossAllocated = grossAmount > grossRemaining ? grossRemaining : grossAmount
         }
 
-        const netAllocated = grossAllocated * (1 - rate)
+        const netAllocated = parseInt(grossAllocated * (1 - rate))
 
         const amountFromNextBand = this.calcGrossPerBand(
             grossBalance + grossAllocated,
@@ -60,7 +60,7 @@ class TaxCalculator {
         const totalTax = netPerBand.reduce((acc, netAmount) => acc + netAmount, 0)
         debug('calculateNet', { netPerBand, totalTax })
 
-        return parseFloat(totalTax.toFixed(2))
+        return totalTax
     }
 
     grossUp(grossBalance, netAmount) {
@@ -68,7 +68,7 @@ class TaxCalculator {
         const totalGross = grossPerBand.reduce((acc, grossAmount) => acc + grossAmount, 0)
         debug('grossUp', { grossPerBand, totalGross })
 
-        return parseFloat(totalGross.toFixed(2))
+        return totalGross
     }
 }
 

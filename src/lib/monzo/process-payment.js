@@ -20,7 +20,7 @@ function ProcessPayment(tax, transactions, monzo) {
 
         debug('tax', taxToPay)
         if (transaction.status === NEW) {
-            await monzo.depositToPot(taxToPay * 100, potId, accountId)
+            await monzo.depositToPot(parseInt(taxToPay * 100), potId, accountId)
             transaction.status = DEPOSITED
             transaction.tax = taxToPay
         }

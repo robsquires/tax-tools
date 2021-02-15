@@ -22,3 +22,11 @@ describe('parse', () => {
         expect(() => money.parse(-1)).toThrow()
     })
 })
+
+describe('Money', () => {
+    test('fromPence', () => {
+        console.log(money.Money)
+        const onePound = money.Money.fromPence(101)
+        expect(onePound.value).toBe(101)
+    })
+})

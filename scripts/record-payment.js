@@ -9,4 +9,4 @@ async function main(amount) {
     }
 }
 
-main(parseFloat(process.argv[2])).then(console.log).catch(console.err)
+main(parseInt(process.argv[2])).then(console.log).catch(console.err)

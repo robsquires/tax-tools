@@ -14,6 +14,28 @@ function parse(amount) {
     return parseFloat(amount.toFixed(2))
 }
 
+class Money {
+    constructor(value) {
+        this.value = value
+    }
+
+    valueOf() {
+        return parseInt(this.value)
+    }
+
+    static fromPence(valueInPence) {
+        return new Money(valueInPence)
+    }
+
+    static fromPounds(valueInPounds) {
+        const valueInPence = parseInt(valueInPounds * 100)
+        return new Money(valueInPence)
+    }
+}
+
 module.exports = {
     parse,
+    Money,
 }
+
+// fromPence, fromPound
