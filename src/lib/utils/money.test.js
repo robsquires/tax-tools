@@ -1,32 +1,52 @@
-const money = require('./money')
-
-describe('parse', () => {
-    test('returns valid amounts', () => {
-        expect(money.parse(1)).toBe(1.0)
-        expect(money.parse(0.99)).toBe(0.99)
-        expect(money.parse(1.1)).toBe(1.1)
-    })
-
-    test('rounds to nearest pence', () => {
-        expect(money.parse(0.999)).toBe(1)
-        expect(money.parse(1.199)).toBe(1.2)
-    })
-
-    test('throws for non-numeric', () => {
-        expect(() => money.parse('a')).toThrow()
-        expect(() => money.parse('1')).toThrow()
-        expect(() => money.parse({})).toThrow()
-    })
-
-    test('throws for negative numbers', () => {
-        expect(() => money.parse(-1)).toThrow()
-    })
-})
+const Money = require('./money')
 
 describe('Money', () => {
-    test('fromPence', () => {
-        console.log(money.Money)
-        const onePound = money.Money.fromPence(101)
-        expect(onePound.value).toBe(101)
+    describe('fromPence', () => {
+        test('from int', () => {
+            expect(Money.fromPence(101)).toBe(101)
+        })
+
+        test('from string', () => {
+            expect(Money.fromPence('101')).toBe(101)
+        })
+
+        test('throws if decimal value', () => {
+            expect(() => Money.fromPence(10.1)).toThrow()
+            expect(() => Money.fromPence('10.1')).toThrow()
+        })
+
+        test('throws for non-numeric', () => {
+            expect(() => Money.fromPence('a')).toThrow()
+            expect(() => Money.fromPence({})).toThrow()
+        })
+
+        test('throws for negative numbers', () => {
+            expect(() => Money.fromPence(-1)).toThrow()
+        })
+    })
+
+    describe('fromPounds', () => {
+        test('from int', () => {
+            expect(Money.fromPounds(1)).toBe(100)
+            expect(Money.fromPounds(1.0)).toBe(100)
+        })
+
+        test('from decimal number', () => {
+            expect(Money.fromPounds(1.01)).toBe(101)
+            expect(Money.fromPounds(1.015)).toBe(102)
+        })
+
+        test('from string', () => {
+            expect(Money.fromPounds('1')).toBe(100)
+            expect(Money.fromPounds('1.0')).toBe(100)
+            expect(Money.fromPounds('1.01')).toBe(101)
+        })
+    })
+
+    test('assertInstanceOf', () => {
+        expect(() => Money.assertInstanceOf(1000)).not.toThrow()
+        expect(() => Money.assertInstanceOf(1000.1)).toThrow()
+        expect(() => Money.assertInstanceOf('1000')).toThrow()
+        expect(() => Money.assertInstanceOf({})).toThrow()
     })
 })

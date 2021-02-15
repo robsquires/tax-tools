@@ -1,31 +1,30 @@
-const money = require('../utils/money')
+const Money = require('../utils/money')
 class TaxService {
     constructor(calculator, earnings) {
         this.calculator = calculator
         this.earnings = earnings
     }
 
-    async calculateTax(amount) {
-        amount = money.parse(amount)
-
+    async calculateTax(grossAmount) {
+        Money.assertInstanceOf(grossAmount)
         const earningsToDate = await this.earnings.get()
-        return this.calculator.calculateNet(earningsToDate, amount)
+        const tax = this.calculator.calculateNet(earningsToDate, grossAmount)
+        return Money.fromPence(tax)
     }
 
-    async applyTax(amount) {
-        amount = money.parse(amount)
-
+    async applyTax(grossAmount) {
+        Money.assertInstanceOf(grossAmount)
         const earningsToDate = await this.earnings.get()
-        const taxToApply = this.calculator.calculateNet(earningsToDate, amount)
-        await this.earnings.set(earningsToDate + amount)
-        return taxToApply
+        const tax = this.calculator.calculateNet(earningsToDate, grossAmount)
+        await this.earnings.set(Money.fromPence(earningsToDate + grossAmount))
+        return Money.fromPence(tax)
     }
 
     async calculateGrossPayment(netAmount) {
-        netAmount = money.parse(netAmount)
-
+        Money.assertInstanceOf(netAmount)
         const earningsToDate = await this.earnings.get()
-        return this.calculator.grossUp(earningsToDate, netAmount)
+        const grossAmount = this.calculator.grossUp(earningsToDate, netAmount)
+        return Money.fromPence(grossAmount)
     }
 }
 

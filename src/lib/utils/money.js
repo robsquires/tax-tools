@@ -2,7 +2,7 @@ function isNumeric(n) {
     return !isNaN(parseFloat(n)) && isFinite(n) && typeof n === 'number'
 }
 
-function parse(amount) {
+function validate(amount) {
     if (!isNumeric(amount)) {
         throw new Error(`Amount is not numeric: ${amount}`)
     }
@@ -11,31 +11,34 @@ function parse(amount) {
         throw new Error(`Amount cannot be negative: ${amount}`)
     }
 
-    return parseFloat(amount.toFixed(2))
+    return amount
 }
 
-class Money {
-    constructor(value) {
-        this.value = value
+function fromPence(valueInPence) {
+    if (!Number.isInteger(Number(valueInPence))) {
+        throw new Error(`Money.fromPence expected integer, received ${valueInPence}`)
     }
+    return validate(Number(valueInPence))
+}
 
-    valueOf() {
-        return parseInt(this.value)
-    }
+function fromPounds(valueInPounds) {
+    const valueInPence = Math.round((valueInPounds * 100).toFixed(2))
+    return fromPence(valueInPence)
+}
 
-    static fromPence(valueInPence) {
-        return new Money(valueInPence)
+function assertInstanceOf(value) {
+    if (!Number.isInteger(value)) {
+        throw new TypeError('Expected an Integer')
     }
+}
 
-    static fromPounds(valueInPounds) {
-        const valueInPence = parseInt(valueInPounds * 100)
-        return new Money(valueInPence)
-    }
+function toPounds(value) {
+    return parseFloat(value / 100)
 }
 
 module.exports = {
-    parse,
-    Money,
+    fromPence,
+    fromPounds,
+    assertInstanceOf,
+    toPounds,
 }
-
-// fromPence, fromPound

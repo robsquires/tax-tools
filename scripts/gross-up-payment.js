@@ -1,13 +1,13 @@
 require('dotenv').config()
 
 const { earnings, tax } = require('../src/lib/tax')
-
+const Money = require('../src/lib/utils/money')
 async function main(netAmountStr) {
-    const netAmount = parseInt(netAmountStr * 100)
-    console.log(netAmount)
+    const amount = Money.fromPounds(netAmountStr)
     return {
-        gross: await tax.calculateGrossPayment(netAmount),
-        total: await earnings.get(),
+        net: Money.toPounds(amount),
+        gross: Money.toPounds(await tax.calculateGrossPayment(amount)),
+        totalTax: Money.toPounds(await earnings.get()),
     }
 }
 

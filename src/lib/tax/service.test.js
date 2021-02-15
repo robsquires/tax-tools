@@ -1,4 +1,6 @@
+const { when } = require('jest-when')
 const TaxService = require('./service')
+const Money = require('../utils/money')
 
 const calculatorMock = {
     calculateNet: jest.fn(),
@@ -22,16 +24,19 @@ describe('tax-service', () => {
 
     describe('applyTax', () => {
         test('applies tax and updates earnings', async () => {
-            const earningsToDate = 2000
-            const earnings = 1000
+            const earningsToDate = Money.fromPounds(2000)
+            const earnings = Money.fromPounds(1000)
             earningsMock.get.mockResolvedValue(earningsToDate)
-            calculatorMock.calculateNet.mockReturnValue(50)
+            when(calculatorMock.calculateNet).calledWith(earningsToDate, earnings).mockReturnValue(5000)
 
             const taxApplied = await taxService.applyTax(earnings)
 
-            expect(taxApplied).toEqual(50)
-            expect(earningsMock.set).toBeCalledWith(earningsToDate + earnings)
-            expect(calculatorMock.calculateNet).toBeCalledWith(earningsToDate, earnings)
+            expect(taxApplied).toEqual(5000)
+            expect(earningsMock.set).toBeCalled()
+            const [newEarnings] = earningsMock.set.mock.calls[0]
+            Money.assertInstanceOf(newEarnings)
+            // bit naff, but forces valueOf() to be called which makes this assertion a bit easier to read
+            expect(newEarnings + 0).toStrictEqual(earningsToDate + earnings)
         })
 
         test('validated valid money amount', async () => {
@@ -41,13 +46,13 @@ describe('tax-service', () => {
 
     describe('calculateGrossPayment', () => {
         test('returns gross payment', async () => {
-            const earningsToDate = 2000
-            const netEarnings = 1000
+            const earningsToDate = Money.fromPounds(2000)
+            const netEarnings = Money.fromPounds(1000)
             earningsMock.get.mockResolvedValue(earningsToDate)
-            calculatorMock.grossUp.mockReturnValue(1100)
+            calculatorMock.grossUp.mockReturnValue(110000)
             const taxApplied = await taxService.calculateGrossPayment(netEarnings)
 
-            expect(taxApplied).toEqual(1100)
+            expect(taxApplied).toEqual(110000)
             expect(earningsMock.set).not.toBeCalled()
             expect(calculatorMock.grossUp).toBeCalledWith(earningsToDate, netEarnings)
         })
@@ -59,14 +64,14 @@ describe('tax-service', () => {
 
     describe('calculateTax', () => {
         test('calculate and returns tax', async () => {
-            const earningsToDate = 2000
-            const earnings = 1000
+            const earningsToDate = Money.fromPounds(2000)
+            const earnings = Money.fromPounds(1000)
             earningsMock.get.mockResolvedValue(earningsToDate)
-            calculatorMock.calculateNet.mockReturnValue(50)
+            when(calculatorMock.calculateNet).calledWith(earningsToDate, earnings).mockReturnValue(5000)
 
-            expect(await taxService.calculateTax(earnings)).toEqual(50)
+            const tax = await taxService.calculateTax(earnings)
+            expect(tax).toEqual(5000)
             expect(earningsMock.set).not.toBeCalled()
-            expect(calculatorMock.calculateNet).toBeCalledWith(earningsToDate, earnings)
         })
 
         test('validated valid money amount', async () => {
