@@ -1,3 +1,5 @@
+const debug = require('debug')('tax-calculator')
+
 class TaxCalculator {
     constructor(bands) {
         this.bands = bands
@@ -56,7 +58,7 @@ class TaxCalculator {
     calculateNet(grossBalance, grossAmount) {
         const netPerBand = this.calcNetPerBand(grossBalance, grossAmount, 0)
         const totalTax = netPerBand.reduce((acc, netAmount) => acc + netAmount, 0)
-        console.log(netPerBand, totalTax)
+        debug('calculateNet', { netPerBand, totalTax })
 
         return parseFloat(totalTax.toFixed(2))
     }
@@ -64,7 +66,7 @@ class TaxCalculator {
     grossUp(grossBalance, netAmount) {
         const grossPerBand = this.calcGrossPerBand(grossBalance, netAmount, 0)
         const totalGross = grossPerBand.reduce((acc, grossAmount) => acc + grossAmount, 0)
-        console.log(grossPerBand, totalGross)
+        debug('grossUp', { grossPerBand, totalGross })
 
         return parseFloat(totalGross.toFixed(2))
     }
