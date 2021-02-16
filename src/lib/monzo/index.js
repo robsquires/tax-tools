@@ -12,4 +12,5 @@ const monzoClient = new MonzoClient(http)
 
 module.exports = {
     processPayment: ProcessPayment(tax, transactionLog, monzoClient),
+    processedPayments: () => transactionLog.get(),
 }

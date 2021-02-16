@@ -18,7 +18,7 @@ Calculates the gross payment required to leave a given net amount after tax
 
 ### Parameters
 
-`amount: Number, excluding currency symbol` 
+`amount: Number, up to 2 dp. should represent the amount in Pounds`
 
 
 ### HTTP Endpoint
@@ -28,8 +28,8 @@ GET /gross-up?amount={amount}
 
 Example
 -------
-Request: GET /gross-up?amount=500
-Response: 540.54
+Request: GET /gross-up?amount=500.10
+Response: 540.66
 ```
 
 ### CLI Script
@@ -44,20 +44,44 @@ Set gross earnings for the current tax year
 
 ### Parameters
 
-`amount: Number`
+`amount: Number, up to 2 dp. should represent the amount in Pounds`
 
 
 ### CLI scripts
 ```
 node scripts/set-earnings.js {amount}
 ```
+## Process payment
+Deduct tax on a payment made into your Monzo account:
+- Calculates tax and moves it to a pot
+- Adds the payment to your earnings
 
-## Record payment
-Record a gross payment. Returns the tax due
+A transaction will progress through several steps until it is fully processed. The steps are documented here: `/src/lib/monzo/transaction-log.js#L39` It can only be fully processed once.
+
+It's possible to see a log of all processed transactions using the **get processed payments** command
 
 ### Parameters
 
-`amount: Number`
+`transactionId: Monzo transaction ID for the payment`
+
+### CLI scripts
+```
+node scripts/process-payment.js {transactionId}
+```
+
+## Get processed payments
+See a log of all processed transactions for the current tax year
+
+```
+node scripts/get-processed-payments.js
+```
+
+## Record payment
+Adds an amount to your earnings for the current tax year. Returns the tax due
+
+### Parameters
+
+`amount: Number, up to 2 dp. should represent the amount in Pounds`
 
 ### CLI scripts
 

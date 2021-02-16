@@ -36,11 +36,16 @@ class TransactionLog {
     }
 }
 
+const statuses = {
+    // brand new transaction for which processing has not been started
+    NEW: 0,
+    // the tax for the payment has been moved to a pot
+    DEPOSITED: 1,
+    // the payment has been added to yearly earnings
+    APPLIED: 2,
+}
+
 module.exports = {
     TransactionLog,
-    statuses: {
-        NEW: 0,
-        DEPOSITED: 1,
-        APPLIED: 2,
-    },
+    statuses,
 }
