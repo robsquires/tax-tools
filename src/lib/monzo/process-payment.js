@@ -11,16 +11,18 @@ function ProcessPayment(tax, transactions, monzo) {
             return
         }
 
-        const { amount: amountInPence } = await monzo.getTransaction(transactionId)
-        debug('amount-in-pence', amountInPence)
+        const { amount } = await monzo.getTransaction(transactionId)
+        debug('amount-in-pence', amount)
 
-        const amount = parseFloat(amountInPence / 100)
+        if (amount < 0) {
+            throw new Error('Transaction is not a deposit')
+        }
 
         const taxToPay = await tax.calculateTax(amount)
 
         debug('tax', taxToPay)
         if (transaction.status === NEW) {
-            await monzo.depositToPot(parseInt(taxToPay * 100), potId, accountId)
+            await monzo.depositToPot(taxToPay, potId, accountId)
             transaction.status = DEPOSITED
             transaction.tax = taxToPay
         }
