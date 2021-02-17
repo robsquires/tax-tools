@@ -1,3 +1,4 @@
+const debug = require('debug')('earnings')
 const Money = require('../utils/money')
 class Earnings {
     constructor(taxYear, s3Bucket) {
@@ -9,6 +10,7 @@ class Earnings {
         try {
             return Money.fromPence((await this.s3Bucket.read(`${this.taxYear}/earnings.json`)).total)
         } catch (err) {
+            debug('get error', err.statusCode)
             if (err.statusCode === 404) {
                 return Money.fromPence(0)
             }
