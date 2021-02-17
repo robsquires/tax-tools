@@ -56,6 +56,17 @@ describe('process-payment', () => {
         expect(transactionLogMock.save).toBeCalledWith('1234', { status: APPLIED, tax: taxAmount })
     })
 
+    test('does not attempt to deposit to pot if no tax due', async () => {
+        when(transactionLogMock.find).calledWith('1234').mockResolvedValue()
+        when(monzoMock.getTransaction).calledWith('1234').mockResolvedValue({ amount: transactionAmount })
+        when(taxMock.calculateTax).calledWith(transactionAmount).mockResolvedValue(0)
+        await processPayment('1234', potId, accId)
+
+        expect(monzoMock.depositToPot).not.toBeCalled()
+        expect(taxMock.applyTax).toBeCalledWith(transactionAmount)
+        expect(transactionLogMock.save).toBeCalledWith('1234', { status: APPLIED, tax: 0 })
+    })
+
     test('skips a transaction which has already been applied', async () => {
         when(transactionLogMock.find).calledWith('1234').mockResolvedValue({ status: APPLIED })
         await processPayment('1234', potId, accId)

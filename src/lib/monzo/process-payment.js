@@ -19,12 +19,11 @@ function ProcessPayment(tax, transactions, monzo) {
         }
 
         const taxToPay = await tax.calculateTax(amount)
-
+        transaction.tax = taxToPay
         debug('tax', taxToPay)
-        if (transaction.status === NEW) {
+        if (transaction.status === NEW && taxToPay > 0) {
             await monzo.depositToPot(taxToPay, potId, accountId)
             transaction.status = DEPOSITED
-            transaction.tax = taxToPay
         }
 
         try {
