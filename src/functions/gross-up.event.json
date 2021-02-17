@@ -2,7 +2,7 @@
     "resource": "/",
     "path": "/",
     "httpMethod": "POST",
-    "queryStringParameters": { "amount": "1000" },
+    "queryStringParameters": { "amount": 1000 },
     "pathParameters": null,
     "stageVariables": null,
     "requestContext": {},
