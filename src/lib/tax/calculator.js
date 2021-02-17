@@ -6,11 +6,12 @@ class TaxCalculator {
     }
 
     calcNetPerBand(grossBalance, grossAmount, bandIdx = 0) {
+        debug('calcNetPerBand', bandIdx, { grossBalance, grossAmount })
         if (!this.bands[bandIdx]) {
             return
         }
 
-        const [_, upper, rate] = this.bands[bandIdx]
+        const [upper, rate] = this.bands[bandIdx]
         const remaining = upper - grossBalance
 
         let grossAllocated
@@ -30,11 +31,12 @@ class TaxCalculator {
     }
 
     calcGrossPerBand(grossBalance, netAmount, bandIdx) {
+        debug('calcGrossPerBand', bandIdx, { grossBalance, netAmount })
         if (!this.bands[bandIdx]) {
             return
         }
 
-        const [_, upper, rate] = this.bands[bandIdx]
+        const [upper, rate] = this.bands[bandIdx]
         const grossAmount = parseInt(netAmount / (1 - rate))
         const grossRemaining = upper - grossBalance
 

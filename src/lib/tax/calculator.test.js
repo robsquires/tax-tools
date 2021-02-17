@@ -1,9 +1,9 @@
 const TaxCalculator = require('./calculator')
 
 const bands = [
-    [0, 100000, 0],
-    [1000, 200000, 0.1],
-    [2000, 300000, 0.2],
+    [100000, 0],
+    [200000, 0.1],
+    [300000, 0.2],
 ]
 
 const calculator = new TaxCalculator(bands)
@@ -27,6 +27,10 @@ describe('calculateNet', () => {
 
     test('decimal values', () => {
         expect(calculator.calculateNet(0, 150050)).toEqual(5005)
+    })
+
+    test('small amount', () => {
+        expect(calculator.calculateNet(150000, 10)).toEqual(1)
     })
 })
 
