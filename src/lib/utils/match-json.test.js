@@ -37,7 +37,7 @@ test('returns false when a property does not exist in data', () => {
     expect(matchJSON(data, rules)).toBeFalsy()
 })
 
-describe('regex matchers', () => {
+describe('regex matcher', () => {
     const data = {
         counterparty: {
             account_number: '123456',
@@ -64,5 +64,25 @@ describe('regex matchers', () => {
             '/counterparty/reference': ['regex', 'TEST', 'i'],
         }
         expect(matchJSON(data, rules)).toBeTruthy()
+    })
+})
+
+describe('greater-than matcher', () => {
+    const data = {
+        amount: 1,
+    }
+
+    test('match', () => {
+        const rules = {
+            '/amount': ['gt', 0],
+        }
+        expect(matchJSON(data, rules)).toBeTruthy()
+    })
+
+    test('does not match', () => {
+        const rules = {
+            '/amount': ['gt', 1],
+        }
+        expect(matchJSON(data, rules)).toBeFalsy()
     })
 })
