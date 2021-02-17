@@ -18,4 +18,5 @@ const tax = new TaxService(calculator, earnings)
 module.exports = {
     earnings,
     tax,
+    taxYear,
 }
