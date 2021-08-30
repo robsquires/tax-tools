@@ -18,6 +18,15 @@ provider:
           - ":"
           - - "arn:aws:s3::"
             - "${env:DATA_BUCKET}/*"
+    - Effect: "Allow"
+      Action:
+        - "s3:ListBucket"
+      Resource:
+        Fn::Join:
+          - ":"
+          - - "arn:aws:s3::"
+            - "${env:DATA_BUCKET}"
+
   environment:
     DATA_BUCKET: ${env:DATA_BUCKET}
 
