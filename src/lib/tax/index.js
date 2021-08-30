@@ -9,7 +9,7 @@ const bands = [
     [15000000, 0.325],
     [999999999, 0.381], // strictly speaking unlimited
 ]
-const taxYear = '2020-2021'
+const taxYear = '2021-2022'
 
 const calculator = new Calculator(bands)
 const earnings = new Earnings(taxYear, dataBucket)
