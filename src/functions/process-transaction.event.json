@@ -1,11 +1,10 @@
 {
     "resource": "/",
     "path": "/",
-    "httpMethod": "GET",
-    "queryStringParameters": { "amount": 1000 },
+    "httpMethod": "POST",
     "pathParameters": null,
     "stageVariables": null,
     "requestContext": {},
-    "body": "",
+    "body": "{ \"data\": {}",
     "isBase64Encoded": false
 }

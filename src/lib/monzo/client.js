@@ -37,6 +37,33 @@ class MonzoClient {
             },
         })
     }
+
+    async registerWebhook(url, accountId) {
+        debug('registerWebhook', url, accountId)
+        await this.httpClient.post({
+            path: `/webhooks`,
+            data: {
+                account_id: accountId,
+                url,
+            },
+        })
+    }
+    async listWebhooks(accountId) {
+        debug('listWebhooks', accountId)
+        return await this.httpClient.get({
+            path: `/webhooks`,
+            params: {
+                account_id: accountId,
+            },
+        })
+    }
+
+    async deleteWebhook(id) {
+        debug('deleteWebhook', id)
+        await this.httpClient.delete({
+            path: `/webhooks/${id}`,
+        })
+    }
 }
 
 module.exports = MonzoClient

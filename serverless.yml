@@ -26,3 +26,12 @@ functions:
     handler: src/functions/gross-up.handler
     events:
       - http: GET /gross-up
+
+  process-transaction:
+    handler: src/functions/process-transaction.handler
+    events:
+      - http: POST /process-transaction
+    environment:
+      POT_ID: ${env:POT_ID}
+      ACC_ID: ${env:ACC_ID}
+      DEBUG: '*'

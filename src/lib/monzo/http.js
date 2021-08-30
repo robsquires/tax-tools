@@ -37,6 +37,15 @@ class MonzoHttpClient {
             body: qs.stringify(data),
         })
     }
+
+    async delete({ path }) {
+        return await fetch(`${this.host}/${path}`, {
+            method: 'DELETE',
+            headers: {
+                authorization: `Bearer ${await this.auth.getAccessToken()}`,
+            },
+        })
+    }
 }
 
 module.exports = MonzoHttpClient

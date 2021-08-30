@@ -35,6 +35,7 @@ function ProcessPayment(tax, transactions, monzo) {
         }
 
         await transactions.save(transactionId, transaction)
+        return taxToPay
     }
 }
 
