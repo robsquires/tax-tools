@@ -78,4 +78,14 @@ describe('tax-service', () => {
             await expect(() => taxService.calculateTax('a')).rejects.toBeTruthy()
         })
     })
+
+    describe('currentTaxLiability', () => {
+        test('returns tax owed based on what you`ve earned this year', async () => {
+            const earningsToDate = Money.fromPounds(2000)
+            earningsMock.get.mockResolvedValue(earningsToDate)
+            when(calculatorMock.calculateNet).calledWith(0, earningsToDate).mockReturnValue(500)
+            const tax = await taxService.currentTaxLiability()
+            expect(tax).toEqual(500)
+        })
+    })
 })

@@ -12,6 +12,12 @@ class TaxService {
         return Money.fromPence(tax)
     }
 
+    async currentTaxLiability() {
+        const earningsToDate = await this.earnings.get()
+        const tax = this.calculator.calculateNet(0, earningsToDate)
+        return Money.fromPence(tax)
+    }
+
     async applyTax(grossAmount) {
         Money.assertInstanceOf(grossAmount)
         const earningsToDate = await this.earnings.get()
